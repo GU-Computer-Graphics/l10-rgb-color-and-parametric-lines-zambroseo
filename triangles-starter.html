@@ -55,9 +55,9 @@
             triGeom.faces.push(new THREE.Face3(3, 4, 5));
             triGeom.faces.push(new THREE.Face3(6, 7, 8));
             triGeom.faces.push(new THREE.Face3(9, 10, 11));
-
+            
             // compute normals for the TW.createMesh() function
-            triGeom.computeFaceNormals();
+            // triGeom.computeFaceNormals();
 
             return triGeom;
         }
@@ -77,7 +77,39 @@
 
         // replace this statement with code to use your new materials
         // to color the faces of the triangle geometry
-        var triMesh = TW.createMesh(triGeom);
+
+        var materials = [
+            new THREE.MeshBasicMaterial({
+                color: new THREE.Color("blue"),
+                side: THREE.DoubleSide
+            }),
+
+            new THREE.MeshBasicMaterial({
+                color: new THREE.Color("rgb(0, 255, 0)"),
+                side: THREE.DoubleSide
+            }),
+
+            new THREE.MeshBasicMaterial({
+                color: new THREE.Color(0xFF0000),
+                side: THREE.DoubleSide
+            }),
+
+            new THREE.MeshBasicMaterial({
+                color: new THREE.Color(1, 1, 0),
+                side: THREE.DoubleSide
+            }),
+
+            
+        ];
+
+        const triMesh = new THREE.Mesh(triGeom, materials);
+
+        for(let i = 0; i < materials.length; i++){
+            triGeom.faces[i].materialIndex = i;
+        }
+        // TW.setMaterialForFaces(triGeom, materials[0], 0);
+        // TW.setMaterialForFaces(triGeom, materials[1], 1);
+
 
         // add the Mesh to the scene
         scene.add(triMesh);
